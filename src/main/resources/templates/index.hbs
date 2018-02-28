@@ -2,7 +2,11 @@
 <html lang=en>
 <head>
 	<meta charset="UTF-8">
-	<title>Hello Students</title>
+	{{#if username}}
+			<title>Hello {{username}}</title>
+	{{else}}
+			<title>Hello Students</title>
+	{{/if}}
 </head>
 <body>
 	{{#if username}}
