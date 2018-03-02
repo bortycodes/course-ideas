@@ -2,10 +2,12 @@ package com.teamgp.courses;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.staticFileLocation;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.teamgp.courses.model.CourseIdea;
 import com.teamgp.courses.model.CourseIdeaDAO;
 import com.teamgp.courses.model.SimpleCourseIdeaDAO;
 
@@ -33,5 +35,20 @@ public class Main {
 			model.put("username", username);
 			return new ModelAndView(model, "sign-in.hbs");
 		}, new HandlebarsTemplateEngine());
+		
+		get("/ideas", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			model.put("ideas", dao.findAll());
+			return new ModelAndView(model, "ideas.hbs");
+		}, new HandlebarsTemplateEngine());
+		
+		post("/ideas", (req, res) -> {
+			String title = req.queryParams("title");
+			//TO DO: This username is tied to the cookie implementation
+			CourseIdea idea = new CourseIdea(title, req.cookie("username"));
+			dao.add(idea);
+			res.redirect("/ideas");
+			return null;
+		});
 	}
 }
