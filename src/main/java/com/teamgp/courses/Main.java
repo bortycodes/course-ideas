@@ -6,11 +6,18 @@ import static spark.Spark.post;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.teamgp.courses.model.CourseIdeaDAO;
+import com.teamgp.courses.model.SimpleCourseIdeaDAO;
+
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Main {
 	public static void main(String[] args) {
+		staticFileLocation("/public");
+		
+		CourseIdeaDAO dao = new SimpleCourseIdeaDAO();
+		
 		get("/hello", (req, res) -> "Hello World");
 		
 		get("/", (req, res) -> {

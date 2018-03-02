@@ -1,0 +1,21 @@
+{{#block "header"}}
+	<!doctype hmtl>
+	<html lang=en>
+	<head>
+		<meta charset="UTF-8">
+		{{#if username}}
+				<title>Welcome {{username}}</title>
+		{{else}}
+				<title>{{#block "title"}}Welcome to Course Ideas{{/block}}</title>
+		{{/if}}
+		<link rel="stylesheet" href="/css/main.css" />
+	</head>
+	<body>
+{{/block}}
+
+{{#block "content"}}{{/block"}}
+
+{{#block "footer"}}
+	</body>
+	</html>
+{{/block}}

@@ -1,14 +1,4 @@
-<!doctype hmtl>
-<html lang=en>
-<head>
-	<meta charset="UTF-8">
-	{{#if username}}
-			<title>Hello {{username}}</title>
-	{{else}}
-			<title>Hello Students</title>
-	{{/if}}
-</head>
-<body>
+{{#partial "content"}}
 	{{#if username}}
 		<h1>Welcome {{username}}!</h1>
 	{{else}}
@@ -17,5 +7,6 @@
 			<button>Sign In</button>
 		</form>
 	{{/if}}
-</body>
-</html>
+{{/partial}}
+
+{{> base.hbs}}
