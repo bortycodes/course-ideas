@@ -2,7 +2,6 @@ package com.teamgp.courses;
 
 import static spark.Spark.before;
 import static spark.Spark.get;
-import static spark.Spark.halt;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
@@ -31,7 +30,7 @@ public class Main {
 			//TO DO: Send message	 about redirect somehow...
 			if(req.attribute("username") == null)
 				res.redirect("/");
-				halt();
+				//halt();
 		});
 		
 		get("/", (req, res) -> {
@@ -41,12 +40,11 @@ public class Main {
 		}, new HandlebarsTemplateEngine());
 		
 		post("/sign-in", (req, res) -> {
-			Map<String, String> model = new HashMap<>();
 			String username = req.queryParams("username");
 			res.cookie("username", username);
-			model.put("username", username);
-			return new ModelAndView(model, "sign-in.hbs");
-		}, new HandlebarsTemplateEngine());
+			res.redirect("/");
+			return null;
+		});
 		
 		get("/ideas", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
