@@ -1,6 +1,8 @@
 package com.teamgp.courses;
 
+import static spark.Spark.before;
 import static spark.Spark.get;
+import static spark.Spark.halt;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
@@ -20,11 +22,21 @@ public class Main {
 		
 		CourseIdeaDAO dao = new SimpleCourseIdeaDAO();
 		
-		get("/hello", (req, res) -> "Hello World");
+		before((req, res) -> {
+			if(req.cookie("username") != null)
+				req.attribute("username", req.cookie("username"));
+		});
+		
+		before("/ideas", (req, res) -> {
+			//TO DO: Send message	 about redirect somehow...
+			if(req.attribute("username") == null)
+				res.redirect("/");
+				halt();
+		});
 		
 		get("/", (req, res) -> {
 			Map<String, String> model = new HashMap<>();
-			model.put("username", req.cookie("username"));
+			model.put("username", req.attribute("username"));
 			return new ModelAndView(model, "index.hbs");
 		}, new HandlebarsTemplateEngine());
 		
@@ -44,8 +56,7 @@ public class Main {
 		
 		post("/ideas", (req, res) -> {
 			String title = req.queryParams("title");
-			//TO DO: This username is tied to the cookie implementation
-			CourseIdea idea = new CourseIdea(title, req.cookie("username"));
+			CourseIdea idea = new CourseIdea(title, req.attribute("username"));
 			dao.add(idea);
 			res.redirect("/ideas");
 			return null;
