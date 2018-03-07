@@ -1,6 +1,8 @@
 package com.teamgp.courses.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.github.slugify.Slugify;
@@ -43,6 +45,10 @@ public class CourseIdea {
 	public int getVoteCount() {
 		return voters.size();
 	}
+	
+	public List<String> getVoters(){
+		return new ArrayList<>(voters);
+	}	
 
 	@Override
 	public int hashCode() {
