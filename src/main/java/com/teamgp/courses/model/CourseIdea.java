@@ -1,12 +1,27 @@
 package com.teamgp.courses.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.github.slugify.Slugify;
+
 public class CourseIdea {
 	private String title;
 	private String creator;
+	private String slug;
+	private Set<String> voters;
 	
 	public CourseIdea(String title, String creator) {
+		voters = new HashSet<>();
 		this.title = title;
 		this.creator = creator;
+		try {
+			Slugify slugify = new Slugify();
+			slug = slugify.slugify(title);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String getTitle() {
@@ -15,6 +30,18 @@ public class CourseIdea {
 
 	public String getCreator() {
 		return creator;
+	}
+	
+	public String getSlug() {
+		return slug;
+	}
+	
+	public boolean addVoter(String voterUsername) {
+		return voters.add(voterUsername);
+	}
+	
+	public int getVoteCount() {
+		return voters.size();
 	}
 
 	@Override
