@@ -21,7 +21,6 @@ public class CourseIdea {
 			Slugify slugify = new Slugify();
 			slug = slugify.slugify(title);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

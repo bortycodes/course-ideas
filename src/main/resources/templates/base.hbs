@@ -8,6 +8,9 @@
 	</head>
 	<body>
 		<div class="page">
+			{{#if flash_message}}
+				<p id="flash-message">{{ flash_message }}</p>
+			{{/if}}
 {{/block}}
 
 {{#block "content"}}{{/block}}
