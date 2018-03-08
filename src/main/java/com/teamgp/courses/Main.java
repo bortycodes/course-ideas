@@ -1,6 +1,7 @@
 package com.teamgp.courses;
 
 import static spark.Spark.before;
+import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import com.teamgp.courses.model.CourseIdea;
 import com.teamgp.courses.model.CourseIdeaDAO;
+import com.teamgp.courses.model.NotFoundException;
 import com.teamgp.courses.model.SimpleCourseIdeaDAO;
 
 import spark.ModelAndView;
@@ -72,5 +74,12 @@ public class Main {
 			model.put("idea", dao.findBySlug(req.params("slug")));
 			return new ModelAndView(model, "idea.hbs");
 		}, new HandlebarsTemplateEngine());
+		
+		exception(NotFoundException.class, (exc, req, res) -> {
+			res.status(404);
+			HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
+			String html = engine.render(new ModelAndView(null, "not-found.hbs"));
+			res.body(html);
+		});
 	}
 }
